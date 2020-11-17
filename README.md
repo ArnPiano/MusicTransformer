@@ -27,7 +27,7 @@ Vocabulary is composed by 388+3 tokens:
 ## Training
 Training is done using sliding sequences, as in the tutorial.
 
-- Given a sequence <A, B, C, D>, the model is trained on the sequence <A, B, C>, and its target is the sequence <B, C, D>
+- Given a sequence <A, B, C, D>, input sequence is <A, B, C>, target sequence is <B, C, D>
 - Input sequences **B** batches of subsequences of length **L** randomly sampled from longer sequences of variable length _len_ starting anywhere from index _0_ to _len_-**L**.
 
 The scheduler is Noam Optimizer, discussed in the paper Attention is All You Need.
