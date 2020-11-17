@@ -1,0 +1,10 @@
+create three (empty) folders named:
+midi_out
+models
+training_summary
+
+put midi dataset in the folder:
+midi_in
+
+encode dataset in the folder
+encoded_in
