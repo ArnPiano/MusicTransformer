@@ -109,7 +109,8 @@ class MusicTransformer(nn.Module):
 
         # get rid of additional dimension
         result = result[0]
-
+        result = result.cpu()
+        
         return result
 
     def infer_mode(self, on: bool = True) -> None:
