@@ -1,3 +1,4 @@
+import os        # Temporary until main.py is not ready
 from model import MusicTransformer, test_composition
 from data import Data
 from config import *
@@ -12,6 +13,21 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
 from midi_processor.processor import decode_midi
+
+# Ugly easy fix until main.py is ready
+try:
+    os.makedirs(log_dir)
+except:
+    continue
+try:
+    os.makedirs(midi_out_dir)
+except:
+    continue
+try:
+    os.makedirs(model_dir)
+except:
+    continue
+
 
 dataset = Data(data_dir)
 
@@ -45,7 +61,7 @@ for e in range(start_epoch, epochs):
 
     total_loss_list = []
 
-    for b in tqdm(range(len(dataset.files)//B)):
+    for b in tqdm(range(len(dataset.file_dict["train"])//B)):
         optimizer.zero_grad()
         try:
             x, y = dataset.slide_seq2seq_batch(B, L)
