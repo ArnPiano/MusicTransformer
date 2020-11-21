@@ -33,5 +33,13 @@ Training is done using sliding sequences, as in the tutorial.
 The scheduler is Noam Optimizer, discussed in the paper Attention is All You Need.
 The Loss function is cross entropy with label smoothing.
 
+## Instructions
 
+put midi dataset in the folder:
+midi_in
 
+Go to project directory and execute process_midi.py
+Change the config as you prefer
+execute train.py
+
+Beware: the program creates many checkpoints
