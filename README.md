@@ -24,6 +24,16 @@ Vocabulary is composed by 388+3 tokens:
 - 32 VELOCITY bins
 - <sos>, <eos>, <pad> tokens
 
+## Hyperparameters
+
+- **B**: Batch size
+- **L**: Length of the sample, better if it does not exceed the length of the shortest midi file
+- **D**: Dimension of the network **Must be divisible by H**
+- **d**: Dimension of the feedforward layer
+- **H**: Number of Heads on each attention layer**Must divide D**
+- **dist**: tells the generator to use the whole distribution instead of the most token note to decide the next token in the sequence
+
+
 ## Training
 Training is done using sliding sequences, as in the tutorial.
 
