@@ -14,19 +14,16 @@ import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
 from midi_processor.processor import decode_midi
 
-# Ugly easy fix until main.py is ready
-try:
-    os.makedirs(log_dir)
-except:
-    continue
-try:
-    os.makedirs(midi_out_dir)
-except:
-    continue
-try:
-    os.makedirs(model_dir)
-except:
-    continue
+# Easy fix until main.py is ready
+def create_directory(dir):
+    if not os.path.exists(dir) or not os.path.isdir(dir):
+        os.makedirs(dir)
+
+
+create_directory(log_dir)
+create_directory(midi_out_dir)
+create_directory(model_dir)
+
 
 
 dataset = Data(data_dir)
