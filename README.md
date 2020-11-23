@@ -22,7 +22,7 @@ Vocabulary is composed by 388+3 tokens:
 - 128 NOTE-OFF events
 - 100 TIME-SHIFT events
 - 32 VELOCITY bins
-- <sos>, <eos>, <pad> tokens
+- SOS, EOS, PAD tokens
 
 ## Hyperparameters
 
