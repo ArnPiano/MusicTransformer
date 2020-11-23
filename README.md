@@ -48,6 +48,8 @@ The Loss function is cross entropy with label smoothing.
 put midi dataset in the folder:
 midi_in
 
+Download preprocessor ([here, same link as before](https://github.com/jason9693/midi-neural-processor)).
+
 Go to project directory and execute process_midi.py
 
 Change the config as you prefer
