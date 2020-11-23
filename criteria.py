@@ -85,7 +85,7 @@ if __name__ == '__main__':
     accuracy = CategoricalAccuracy()
     SCEloss = SmoothCrossEntropyLoss(label_smoothing=label_smoothing)
 
-    dataset = Data(data_dir)
+    dataset = Data(pickle_dir)
     x, y = dataset.slide_seq2seq_batch(B, L)
     x = torch.from_numpy(x).contiguous().to(device, non_blocking=True, dtype=torch.int)
     y = torch.from_numpy(y).contiguous().to(device, non_blocking=True, dtype=torch.int)

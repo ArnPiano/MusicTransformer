@@ -26,7 +26,7 @@ create_directory(model_dir)
 
 
 
-dataset = Data(data_dir)
+dataset = Data(pickle_dir)
 
 writer = SummaryWriter(log_dir)
 

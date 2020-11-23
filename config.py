@@ -1,6 +1,6 @@
 import torch
 
-load_model = True                      # has the model to be loaded from a previous checkpoint?
+load_model = False                      # has the model to be loaded from a previous checkpoint?
 
 epochs = 1000                           # number of epochs
 rate = .1                               # dropout rate
@@ -13,7 +13,7 @@ L = 1024                                # Maximum Length of the model
 D = 512                                 # Dimension of the embedding and the model
 H = 8                                   # Number of heads in each relative attention
 N = 6                                   # Number of Transformer models stacked
-d = D*2                                 # Dimension of fully connected layer in single Embedding Layers
+d = D//2                                 # Dimension of fully connected layer in single Embedding Layers
 
 pad_token = 388                         # pad token
 sos_token = 389                         # SOS token
@@ -23,8 +23,10 @@ vocab_size = 391                        # possible outputs
 eval_frequency = 100                    # How frequent is the evaluation of the model (in batches)?
 ckp_frequency = 50                      # After how many epochs is a stable checkpoint created?
 
+
+DATASET_DIR = 'midi_in'                 # DIRECTORY OF THE DATASET'S MIDI FILES
 RUN_DIR = 'test_run\\'
-data_dir = 'encoded_in'                 # Where the pickle data is stored
+pickle_dir = 'pickle_dir'                 # Where the pickle data is stored
 log_dir = RUN_DIR+'training_summary'    # where the log fo the training is stored
 midi_out_dir = RUN_DIR+'midi_out'       # Where the generated midi is stored
 model_dir= RUN_DIR+'models\\'           # Where the model's checkpoint are stored

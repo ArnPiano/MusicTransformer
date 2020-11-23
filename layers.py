@@ -123,9 +123,9 @@ class RelativeGlobalAttention(nn.Module):
         return mask.to(qe.dtype) * qe
 
 
-class EncoderLayer(nn.Module):
+class DecoderLayer(nn.Module):
     def __init__(self, D: int, H: int, L: int, rate: float, d: int):
-        super(EncoderLayer, self).__init__()
+        super(DecoderLayer, self).__init__()
         self.D = D
         self.d = d
         self.rga = RelativeGlobalAttention(H, D, L)
@@ -164,10 +164,10 @@ class EncoderLayer(nn.Module):
         return out2
 
 
-class Encoder(nn.Module):
+class Decoder(nn.Module):
     def __init__(self, D: int, N: int, L: int, H: int,
                  vocab_size: int = vocab_size, d: Optional[int] = None, rate: float = .1):
-        super(Encoder, self).__init__()
+        super(Decoder, self).__init__()
 
         self.D = D
         self.N = N
@@ -182,7 +182,7 @@ class Encoder(nn.Module):
         self.pos_embedding = utils.DynamicPositionEmbedding(D, L)
 
         self.EncoderLayers = nn.ModuleList(
-            [EncoderLayer (D = self.D, H = self.H, L = self.L, rate = rate, d= self.d)
+            [DecoderLayer (D = self.D, H = self.H, L = self.L, rate = rate, d= self.d)
              for _ in range(self.N)]
         )
 
@@ -191,7 +191,7 @@ class Encoder(nn.Module):
     def forward(self, x: torch.tensor, mask: Optional[torch.tensor] = None, get_weights: bool = False) -> torch.tensor:
         """
         Embeds the Tensor into a D dimensional shape, using both learnable embedding and fixed positional embedding.
-        Then it passes the Tensor through the N Encoder Layers.
+        Then it passes the Tensor through the N Decoder Layers.
 
         :param x: tensor of shape (B, L)
         :param mask: tensor of shape (B, 1, L, L)
@@ -237,15 +237,15 @@ if __name__ == '__main__':
     x = torch.rand(B, L, D)
     print('output of DynamicPositionEmbedding class/input of RelativeGlobalAttention class:\nshape: '
           , x.shape, 'type: ', x.dtype, '\n')
-    enc = EncoderLayer(D, H, L, rate, d)
+    enc = DecoderLayer(D, H, L, rate, d)
 
-    print('input for EncoderLayer class:\nshape: ', x.shape, 'type: ',x.dtype, '\n')
+    print('input for DecoderLayer class:\nshape: ', x.shape, 'type: ',x.dtype, '\n')
     x = enc(x)
-    print('output for EncoderLayer class:\nshape: ', x.shape, 'type: ', x.dtype, '\n')
+    print('output for DecoderLayer class:\nshape: ', x.shape, 'type: ', x.dtype, '\n')
 
-    nenc = Encoder(D, N, L, H, vocab_size, d, rate )
+    nenc = Decoder(D, N, L, H, vocab_size, d, rate)
     x = torch.randint(10, (B, L))
     # x = torch.rand(B, L)
-    print('input for Encoder class:\nshape: ', x.shape, 'type: ', x.dtype, '\n', flush=True)
+    print('input for Decoder class:\nshape: ', x.shape, 'type: ', x.dtype, '\n', flush=True)
     x = nenc(x)
-    print('output for Encoder class:\nshape: ', x.shape, 'type: ', x.dtype, '\n')
+    print('output for Decoder class:\nshape: ', x.shape, 'type: ', x.dtype, '\n')

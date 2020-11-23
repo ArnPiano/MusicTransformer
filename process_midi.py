@@ -1,10 +1,15 @@
 import sys, os
 import pickle
 from progress.bar import Bar
-from midi_processor.processor import encode_midi
 
-midi_in_path = 'midi_in'
-encoded_in_path = 'encoded_in'
+if os.path.exists("midi-neural-processor-master") and os.path.isdir("midi-neural-processor-master"):
+    os.rename("midi-neural-processor-master", "midi_processor")
+
+from midi_processor.processor import encode_midi
+from config import *
+
+midi_in_path = DATASET_DIR
+encoded_in_path = pickle_dir
 
 def find_files_by_extensions(root, exts=[]):
 
@@ -22,7 +27,7 @@ def find_files_by_extensions(root, exts=[]):
             if _has_ext(name):
                 yield os.path.join(path, name)
 
-def preprocess_midi_folder(in_path = 'midi_in', out_path = 'encoded_in'):
+def preprocess_midi_folder(in_path = midi_in_path, out_path = encoded_in_path):
     midi_paths = list(find_files_by_extensions(in_path, ['.mid', '.midi']))
     os.makedirs(out_path, exist_ok=True)
 
@@ -39,6 +44,8 @@ def preprocess_midi_folder(in_path = 'midi_in', out_path = 'encoded_in'):
         except EOFError:
             print('EOF Error')
             return
+        except:
+            continue
 
         with open('{}/{}.pickle'.format(out_path, path.split('\\')[-1]), 'wb') as f:
             pickle.dump(data, f)

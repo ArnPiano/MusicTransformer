@@ -20,9 +20,9 @@ class MusicTransformer(nn.Module):
 
         :param D: Model dimension/Embedding dimension
         :param L: Fixed length of the input
-        :param N: Number of stacked Encoder layers
+        :param N: Number of stacked Decoder layers
         :param H: Number of Heads in the attention
-        :param d: Dimension of the linear layer at the end of each Encoder
+        :param d: Dimension of the linear layer at the end of each Decoder
         :param writer: SummaryWriter
         :param dist: bool, for the generation process; if True, uses generated distribution, if False uses argmax of distribution
         :param rate: Dropout rate
@@ -45,7 +45,7 @@ class MusicTransformer(nn.Module):
 
         self.writer = writer
         self.dist = dist
-        self.Decoder = layers.Encoder(self.D, self.N, self.L, self.H, d = self.d, vocab_size=self.vocab_size, rate=rate)
+        self.Decoder = layers.Decoder(self.D, self.N, self.L, self.H, d = self.d, vocab_size=self.vocab_size, rate=rate)
         self.fc = nn.Linear(self.D, self.vocab_size)
 
     def forward(self, x: torch.tensor, length: Optional[int] = None) -> torch.tensor:
@@ -216,7 +216,7 @@ if __name__ == '__main__':
 
     print('testing data composition', flush=True)
 
-    dataset = Data(data_dir)
+    dataset = Data(pickle_dir)
 
     test_composition(dataset, model, composition_length,
                      data_idx=400, data_len=50,
